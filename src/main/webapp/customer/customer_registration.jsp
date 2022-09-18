@@ -1,9 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1"%>
+    pageEncoding="ISO-8859-1" isELIgnored="false"%>
+    <%@ taglib prefix="tag" uri="http://java.sun.com/jsp/jstl/core" %>
 <!doctype html>
 <html lang="en">
   <head>
-  	<title>Customer Login</title>
+  	<title>Customer Registration</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
@@ -19,32 +20,32 @@
 		<div class="container">
 			<div class="row justify-content-center">
 				<div class="col-md-6 text-center mb-5">
-					<h2 class="heading-section">Customer Login</h2>
+					<h2 class="heading-section">Customer Registration</h2>
 				</div>
 			</div>
 			<div class="row justify-content-center">
 				<div class="col-md-6 col-lg-4">
 					<div class="login-wrap p-0">
-		      	<h3 class="mb-4 text-center">Login Now</h3>
-		      	<form action="#" class="signin-form">
+		      	<h3 class="mb-4 text-center">Register Now</h3>
+		      	<form action="user?type=useradd" class="signin-form" method="post">
 		      		<div class="form-group">
-		      			<input type="text" class="form-control" placeholder="Email" required>
+		      			<input type="text" class="form-control" placeholder="Email" name="userEmail" id="userEmail" required> 
 		      		</div>
 		      		<div class="form-group">
-		      			<input type="text" class="form-control" placeholder="Full Name" required>
+		      			<input type="text" class="form-control" placeholder="Full Name" name="userName" id="userName" required >
 		      		</div>
 		      		<div class="form-group">
-		      			<input type="text" class="form-control" placeholder="Phone Number" required>
-		      		</div>
+		      			<input type="text" class="form-control" placeholder="Phone Number" name="userCNo" id="userCNo" required>
+		      		</div>	
 		      		<div class="form-group">
-		      			<input type="text" class="form-control" placeholder="NIC Number" required>
+		      			<input type="text" class="form-control" placeholder="NIC Number" name="userNIC" id="userNIC" required>
 		      		</div>
 	            <div class="form-group">
-	              <input id="password-field" type="password" class="form-control" placeholder="Password" required>
+	              <input id="password-field" type="password" class="form-control" placeholder="Password" name="userPassword" id="userPassword"  required>
 	              <span toggle="#password-field" class="fa fa-fw fa-eye field-icon toggle-password"></span>
 	            </div>
 	            <div class="form-group">
-	            	<button type="submit" class="form-control btn btn-primary submit px-3">Sign In</button>
+	            	<button type="submit" class="form-control btn btn-primary submit px-3">Sign Up</button>
 	            </div>
 	            <div class="form-group d-md-flex">
 	            	<div class="w-50">
@@ -55,10 +56,7 @@
 								</div>
 								
 	            </div>
-	            
-	            <div class="form-group">
-	            	<button type="submit" class="form-control btn btn-primary submit px-3">Register</button>
-	            </div>
+	           
 	          </form>
 	          
 		      </div>

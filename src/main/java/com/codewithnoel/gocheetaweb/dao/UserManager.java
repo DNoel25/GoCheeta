@@ -2,7 +2,6 @@ package com.codewithnoel.gocheetaweb.dao;
 
 
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -31,7 +30,7 @@ public class UserManager {
 		return mysql.getConnection();
 	}
 	
-public static boolean addUser(Users users) throws ClassNotFoundException, SQLException {
+	public static boolean addUser(Users users) throws ClassNotFoundException, SQLException {
 		
 		Connection connection = getconnection();
 		//Statement st = connection.createStatement();
@@ -83,24 +82,49 @@ public static boolean addUser(Users users) throws ClassNotFoundException, SQLExc
 	 * return users; }
 	 */
 
-	public boolean check(String uname,String pass) throws SQLException, ClassNotFoundException {
+	public static Users searchUser(String userName,String userPassword) throws SQLException, ClassNotFoundException {
 		
-		Connection connection = getconnection();
-		String query = "SELECT * from Users where userName = ?, userPassword = ?";
-		 
+//		Connection connection = getconnection();
+//		String query = "SELECT * from Users where userName = ?, userPassword = ?";
+//		
+//		PreparedStatement ps = connection.prepareStatement(query);
+//		 
+//		 ps.setString(1, userName);
+//		 ps.setString(2, userPassword);
+//		 
+//
+//		ResultSet rs = ps.executeQuery();
+//		  
+//		 if(rs.next()) {
+//			 return true;
+//		 }
+//		 
+//		 return false;
+		
+		DBConnector connector = new MySqlDBConnector();
+		Connection connection = connector.getConnection();
+		
+		String query="select * from tblusers where userName = ?";
+		
 		PreparedStatement ps = connection.prepareStatement(query);
-		 
-		 ps.setString(1, uname);
-		 ps.setString(2, pass);
-		 
-
+		ps.setString(1, userName);
+		
 		ResultSet rs = ps.executeQuery();
-		  
-		 if(rs.next()) {
-			 return true;
-		 }
-		 
-		 return false;
+		
+		Users user = null;
+		
+		if(rs.next()) {
+			
+			user = new Users();
+			user.setUserName(rs.getString("userName"));
+			user.setUserPassword(rs.getString("userPassword"));
+			user.setUserType(rs.getString("userType"));
+		}
+		
+		ps.close();
+		connection.close();
+		
+		return user;
 		 
 	}
 	

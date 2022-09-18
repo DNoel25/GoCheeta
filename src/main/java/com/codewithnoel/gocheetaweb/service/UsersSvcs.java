@@ -4,19 +4,28 @@ import java.sql.SQLException;
 import java.util.List;
  
 import com.codewithnoel.gocheetaweb.dao.UserManager;
-import com.codewithnoel.gocheetaweb.model.Users;
+import com.codewithnoel.gocheetaweb.model.Users; 
 
 public class UsersSvcs {
 
-	private static UsersSvcs service = new UsersSvcs(); 
-	
+	//private static UsersSvcs service = new UsersSvcs(); 
+	private static UsersSvcs usersSvcsObj;
 	public UsersSvcs() {
 		
 	}	
 	
-	public static UsersSvcs getInstanceUserManage() {
-		return service;
-	}
+	/*
+	 * public static UsersSvcs getInstanceUserManage() { return service; }
+	 */
+	
+	public static synchronized UsersSvcs getInstanceUserManage() {
+		
+		if(usersSvcsObj == null) {
+			usersSvcsObj = new UsersSvcs();
+		}
+		
+		return usersSvcsObj;
+	}	
 	
 	/*
 	 * public static synchronized UsersSvcs getProductServiceInstance() {
@@ -27,7 +36,7 @@ public class UsersSvcs {
 	 */
 	
 	
-		
+	//----------services
 		public List<Users> getUsers() throws ClassNotFoundException, SQLException {
 			UserManager uManager = new UserManager(); 
 			
@@ -39,8 +48,12 @@ public class UsersSvcs {
 			return UserManager.addUser(users);
 		}
 
-		  public boolean check(String username,String password) throws ClassNotFoundException, SQLException {
-			  UserManager uManager = new UserManager(); 
-			  return uManager.check(username, password);
+//		  public Users check(String userName,String userPassword) throws ClassNotFoundException, SQLException {
+//			  UserManager uManager = new UserManager(); 
+//			  return uManager.check(userName, userPassword);
+//		  }
+		public Users searchUser(String userName,String userPassword) throws ClassNotFoundException, SQLException {
+			
+			return UserManager.searchUser(userName, userPassword);
 		  }
 }

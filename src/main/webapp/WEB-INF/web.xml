@@ -7,11 +7,43 @@
   <servlet>
   	<servlet-name>UserManagerController</servlet-name>
   	<display-name>UserManagerController</display-name>
-  	<description></description>
+  	<description>This will manage all the users related requests</description>
   	<servlet-class>com.codewithnoel.gocheetaweb.controller.UserManagerController</servlet-class>
+  </servlet>
+  <servlet>
+  	<servlet-name>BookingManagerController</servlet-name>
+  	<display-name>BookingManagerController</display-name>
+  	<description>This will manage all the booking related requests</description>
+  	<servlet-class>com.codewithnoel.gocheetaweb.controller.BookingManagerController</servlet-class>
+  </servlet>
+  
+  <servlet>
+  	<servlet-name>VehicleController</servlet-name>
+  	<display-name>VehicleController</display-name>
+  	<description>This will manage all the vehicle related requests</description>
+  	<servlet-class>com.codewithnoel.gocheetaweb.controller.VehicleController</servlet-class>
+  </servlet>
+  <servlet>
+  	<servlet-name>CategoryManagerController</servlet-name>
+  	<display-name>CategoryManagerController</display-name>
+  	<description>This will manage all the vehicle category related requests</description>
+  	<servlet-class>com.codewithnoel.gocheetaweb.controller.CategoryManagerController</servlet-class>
   </servlet>
   <servlet-mapping>
   	<servlet-name>UserManagerController</servlet-name>
   	<url-pattern>/user</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+  	<servlet-name>BookingManagerController</servlet-name>
+  	<url-pattern>/Booking</url-pattern>
+  </servlet-mapping>
+  
+  <servlet-mapping>
+  	<servlet-name>VehicleController</servlet-name>
+  	<url-pattern>/vehicle</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+  	<servlet-name>CategoryManagerController</servlet-name>
+  	<url-pattern>/category</url-pattern>
   </servlet-mapping>
 </web-app>

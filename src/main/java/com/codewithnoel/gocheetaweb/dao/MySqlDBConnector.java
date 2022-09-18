@@ -9,7 +9,7 @@ public class MySqlDBConnector implements DBConnector {
 	@Override
 	public Connection getConnection() throws ClassNotFoundException, SQLException {
 		
-		Class.forName("com.mysql.jdbc.Driver");
+		Class.forName("com.mysql.cj.jdbc.Driver");
 		String url = "jdbc:mysql://localhost:3306/gocheetadb";
 		String user = "root";
 		String passsword = "Welcome@123";

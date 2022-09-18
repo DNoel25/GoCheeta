@@ -15,6 +15,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import com.codewithnoel.gocheetaweb.dao.UserManager;
 import com.codewithnoel.gocheetaweb.model.Users;
 import com.codewithnoel.gocheetaweb.service.UsersSvcs;
 
@@ -32,12 +33,12 @@ public class UserManagerController extends HttpServlet {
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		String action = request.getParameter("action");
-
-		if (action.equals("useradd")) {
+		//String action = request.getParameter("action");
+		var type= request.getParameter("type");
+		if (type.equals("useradd")) {
 			addUser(request, response);
 		}
-		if (action.equals("userlog")) {
+		if (type.equals("userlog")) {
 			loginUser(request, response);
 		}
 
@@ -51,7 +52,7 @@ public class UserManagerController extends HttpServlet {
 
 		user.setUserName(request.getParameter("userName"));
 		user.setUserEmail(request.getParameter("userEmail"));
-		;
+		
 		user.setUserPassword(request.getParameter("userPassword"));
 		user.setUserType(request.getParameter("userType"));
 		user.setUserNIC(request.getParameter("userNIC"));
@@ -81,7 +82,7 @@ public class UserManagerController extends HttpServlet {
 			message = e.getMessage();
 		}
 
-		RequestDispatcher rd = request.getRequestDispatcher("Register.jsp");
+		RequestDispatcher rd = request.getRequestDispatcher("cusomter/customer_registration.jsp");
 		request.setAttribute("useraddMessage", message);
 
 		try {
@@ -99,49 +100,46 @@ public class UserManagerController extends HttpServlet {
 	
 		String userName = request.getParameter("userName");
 		String userPassword = request.getParameter("userPassword");
+		String userType = request.getParameter("userType");
 	
 		String message ="";
 		
-		try {
-			if(service.check(userName, userPassword))
+		
+			if(service.searchUser(userName, userPassword) != null)
 			{
 				
 				HttpSession session=request.getSession();
 				session.setAttribute("username",userName);
-				response.sendRedirect("welcome.jsp");
+				session.setAttribute("userType", userType);
+				if(userType == "admin")
+					response.sendRedirect("admin/admin_dashboard");
+				if (userType == "driver")
+					response.sendRedirect("driver/driver_dashboard");
+				else
+					response.sendRedirect("customer/customer_dashboard");
 				
 			}else {
 				
-				response.sendRedirect("login.jsp");
+				response.sendRedirect("index.jsp");
 				
-			}
-		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		/*
-		 * try { user = service.searchUser(username, password); HttpSession session =
-		 * request.getSession();
-		 */
-		
-		/*if(user != null) { 
 			
-			session.setAttribute("sessionusername", username);
+		
+	try { user = service.searchUser(userName, userPassword); HttpSession session =
+				  request.getSession();
+		 
+		
+		if(user != null) { 
+			
+			session.setAttribute("sessionusername", userName);
 			session.setAttribute("type", user.getUserType());
 			
 			 session.setMaxInactiveInterval(30*60);
 			  
-			 Cookie userName = new Cookie("sessionusername", username);
-			 userName.setMaxAge(30*60); response.addCookie(userName);
-			 
-			 Cookie type = new Cookie("sessiontype", user.getUserType());
-			 type.setMaxAge(30*60); response.addCookie(type);
+//			 Cookie userName = new Cookie("sessionusername", username);
+//			 userName.setMaxAge(30*60); response.addCookie(userName);
+//			 
+//			 Cookie type = new Cookie("sessiontype", user.getUserType());
+//			 type.setMaxAge(30*60); response.addCookie(type);
 			
 			try 
 			{
@@ -153,11 +151,11 @@ public class UserManagerController extends HttpServlet {
 			}
 			
 			
-			 * try { response.sendRedirect("index.jsp?sessionuname="+uname+"");
-			 * //response.sendRedirect("doctorAddRecord.jsp?sessionuname="+uname+""); }
-			 * catch (IOException ex) {
-			 * 
-			 * message = ex.getMessage(); }
+			  try { response.sendRedirect("index.jsp?sessionuname="+userName+"");
+			  response.sendRedirect("welcome.jsp?sessionuname="+userName+""); }
+			  catch (IOException ex) {
+			  
+			  message = ex.getMessage(); }
 			 
 		}
 		else 
@@ -169,8 +167,8 @@ public class UserManagerController extends HttpServlet {
 			} catch (IOException es) {
 				
 				message = es.getMessage();
-			}	*/
-		/*}
+			}	
+		}
 		
 		session.setAttribute("loginMessage", message);
 		
@@ -180,6 +178,6 @@ public class UserManagerController extends HttpServlet {
 	{
 
 		message = e.getMessage();
-	}*/
+	}
 
 }}

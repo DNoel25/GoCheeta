@@ -17,7 +17,7 @@
 		<div class="container">
 			<div class="row justify-content-center">
 				<div class="col-md-6 text-center mb-5">
-					<h2 class="heading-section">Go Cheeta</h2>
+					<h2 class="heading-section">Driver Login</h2>
 				</div>
 			</div>
 			<div class="row justify-content-center">
@@ -33,7 +33,7 @@
 	              <span toggle="#password-field" class="fa fa-fw fa-eye field-icon toggle-password"></span>
 	            </div>
 	            <div class="form-group">
-	            	<a href='customer_registration.jsp'><button type="submit" class="form-control btn btn-primary submit px-3">Sign In</button></a>
+	            	<button type="submit" class="form-control btn btn-primary submit px-3">Sign In</button>
 	            </div>
 	            <div class="form-group d-md-flex">
 	            	<div class="w-50">
