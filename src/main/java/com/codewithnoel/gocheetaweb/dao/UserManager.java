@@ -128,6 +128,34 @@ public class UserManager {
 		 
 	}
 	
+	public List<Users> getUsers() throws ClassNotFoundException, SQLException {
+
+		Connection connection = getconnection();
+		String query = "SELECT * FROM tblusers ";
+		
+		Statement st = connection.createStatement(); 
+		ResultSet rs = st.executeQuery(query);
+		
+		List<Users> usersList = new ArrayList();
+		
+		while(rs.next()) {
+			Users users = new Users();
+			users.setUserId(rs.getInt("userId"));
+			users.setUserName(rs.getString("userName"));
+			users.setUserEmail(rs.getString("userEmail"));
+			users.setUserNIC(rs.getString("userNIC"));
+			users.setUserType(rs.getString("userType"));
+			users.setUserCNo(rs.getString("userCNo"));
+			
+			usersList.add(users);
+		}
+		
+		st.close();
+		connection.close();
+		
+		return usersList;
+	}
+	
 	public List<Users> getDrivers() throws ClassNotFoundException, SQLException {
 
 		Connection connection = getconnection();

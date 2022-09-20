@@ -31,7 +31,7 @@ public class BookingManagerController extends HttpServlet {
 		
 		var userName = request.getParameter("userName");
 		if(userName != null) {
-			launchSpecificProductInformation(request, response);
+			launchSpecificCategoryInformation(request, response);
 		}
 		displayAllBooking(request, response);
 	}
@@ -71,7 +71,7 @@ public class BookingManagerController extends HttpServlet {
 		
 	}
 	
-	private void launchSpecificProductInformation(HttpServletRequest request, HttpServletResponse response) throws IOException {
+	private void launchSpecificCategoryInformation(HttpServletRequest request, HttpServletResponse response) throws IOException {
 		
 		
 		

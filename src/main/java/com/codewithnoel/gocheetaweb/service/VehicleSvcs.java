@@ -10,6 +10,7 @@ public class VehicleSvcs {
 
 	private static VehicleSvcs VehicleServiceObj;
 	
+	
 	private VehicleSvcs() {
 		
 	}
@@ -37,20 +38,20 @@ public class VehicleSvcs {
 		return VehicleManager.getAllVehicle();
 	}
 	
-//	public boolean updateVehicle(Vehicle vehicle) throws ClassNotFoundException, SQLException {
-//		
-//		return VehicleManager;
-//	}
-//	
-//	public boolean deleteCategory(int vehicleId) throws ClassNotFoundException, SQLException {
-//		 
-//		
-//		return VehicleManager;
-//	} 
-//public Product getCategory(int categoryId) throws ClassNotFoundException, SQLException {
-//	
-//	CategoryManager categoryManager = CategoryFactory.getCategoryManagerInstance();
-//	return categoryManager.getCategory(categoryId);
+	public boolean updateVehicle(Vehicle vehicle) throws ClassNotFoundException, SQLException {
+	
+		
+		return false ;
+	}
+	
+	public boolean deletevehicle(int vehicleId) throws ClassNotFoundException, SQLException {
+		 
+		
+		return false;
+	} 
+//public Product getVehicle(int vehicleId) throws ClassNotFoundException, SQLException {
+//	 
+//	return ;
 //}
 	
 	

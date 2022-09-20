@@ -43,6 +43,12 @@ public class UsersSvcs {
 			return uManager.getUsers();
 		}
 		
+		public List<Users> getDrivers() throws ClassNotFoundException, SQLException {
+			UserManager uManager = new UserManager(); 
+			
+			return uManager.getDrivers();
+		}
+		
 		public boolean addUser(Users users) throws ClassNotFoundException, SQLException {		
 			//check result and do further processing if you want
 			return UserManager.addUser(users);

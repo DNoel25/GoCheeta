@@ -94,10 +94,16 @@
 		    </tr>
 		  </thead>
 		  <tbody>
-		  	<tag:forEach var="category" items="${categorytList}">
+		  	<tag:forEach var="booking" items="${categorytList}">
 			    <tr>
-			      <td>${category.categoryId}</td>
-			      <td>${category.categoryName}</td>			  
+			     
+			      <td>${booking.bookingId}</td>
+			      <td>${booking.vehicleCategory}</td>	
+			      <td>${booking.streetAddress}</td>	
+			      <td>${booking.cost}</td>	
+			      <td>${booking.bookingStatus}</td>	
+			      <td>${booking.driverCNo}</td>	
+			      <td>${booking.driverName}</td>			  
 			      <td>
 			      	<form action="booking?type=feedback method="post">
 			      		<button type="submit" class="btn btn-danger">Feedback</button>
