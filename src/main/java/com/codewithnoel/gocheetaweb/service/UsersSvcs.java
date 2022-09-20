@@ -54,14 +54,11 @@ public class UsersSvcs {
 			return UserManager.addUser(users);
 		}
 
-//		  public Users check(String userName,String userPassword) throws ClassNotFoundException, SQLException {
-//			  UserManager uManager = new UserManager(); 
-//			  return uManager.check(userName, userPassword);
-//		  }
 		public Users searchUser(String userName,String userPassword) throws ClassNotFoundException, SQLException {
 			
 			return UserManager.searchUser(userName, userPassword);
 		  }
+		
 		
 		 
 }
