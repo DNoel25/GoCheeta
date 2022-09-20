@@ -9,8 +9,8 @@ public class Mailer {
 //
 //	public static void send(String to,String subject,String msg){  
 //		  
-//		final String user="examtestemail@gmail.com";
-//		final String pass="098poilkjmnb";  
+//		final String user="********@gmail.com";
+//		final String pass="*********";  
 //		  
 //		//1st step) Get the session object    
 //		Properties props = new Properties();  
@@ -38,5 +38,5 @@ public class Mailer {
 //		   
 //		      
 //		}  
-	
+//	
 }

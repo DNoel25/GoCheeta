@@ -128,10 +128,10 @@ public class UserManager {
 		 
 	}
 	
-	public List<Users> getUsers() throws ClassNotFoundException, SQLException {
+	public List<Users> getDrivers() throws ClassNotFoundException, SQLException {
 
 		Connection connection = getconnection();
-		String query = "SELECT * FROM tblusers";
+		String query = "SELECT * FROM tblusers where userType = 'driver' ";
 		
 		Statement st = connection.createStatement(); 
 		ResultSet rs = st.executeQuery(query);
@@ -155,5 +155,7 @@ public class UserManager {
 		
 		return usersList;
 	}
+	
+	
 	
 }

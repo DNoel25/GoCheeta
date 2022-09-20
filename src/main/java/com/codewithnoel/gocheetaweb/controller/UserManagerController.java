@@ -14,7 +14,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-
+ 
 import com.codewithnoel.gocheetaweb.dao.UserManager;
 import com.codewithnoel.gocheetaweb.model.Users;
 import com.codewithnoel.gocheetaweb.service.UsersSvcs;
@@ -22,14 +22,55 @@ import com.codewithnoel.gocheetaweb.service.UsersSvcs;
 public class UserManagerController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
+	private UsersSvcs service;
+	private String message;
+	private String deleteMessage;
+	
 	public UserManagerController() {
 
 	}
 
-	protected void doGet(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) {
+		var driverId = request.getParameter("driverId");
+		if(driverId == null) {    		
+				launchAllDrivers(request, response);
+		}
 
 	}
+
+	private void launchAllDrivers(HttpServletRequest request, HttpServletResponse response) {
+		
+			
+	    	List<Users> usersList;
+	    	clearMessage();
+	    	
+			try {
+				usersList = service.getUsers();
+			} catch (ClassNotFoundException | SQLException e) {
+				
+				message = e.getMessage();
+				usersList = new ArrayList<Users>();
+			}
+			request.setAttribute("usersList", usersList);
+			request.setAttribute("message", message);
+			RequestDispatcher rd = request.getRequestDispatcher("admin_drivers.jsp");		
+			try {
+				rd.forward(request, response);
+			} catch (ServletException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		
+	private void clearMessage() {
+		message = "";
+		deleteMessage = "";
+		
+	}
+
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
@@ -40,7 +81,7 @@ public class UserManagerController extends HttpServlet {
 		}
 		if (type.equals("userlog")) {
 			loginUser(request, response);
-		}
+		} 
 
 	}
 
@@ -105,79 +146,92 @@ public class UserManagerController extends HttpServlet {
 		String message ="";
 		
 		
-			if(service.searchUser(userName, userPassword) != null)
-			{
+			try {
+				if(service.searchUser(userName, userPassword) != null)
+				{
+					
+					HttpSession session=request.getSession();
+					session.setAttribute("username",userName);
+					session.setAttribute("userType", userType);
+//				if(userType == "admin")
+//					response.sendRedirect("admin/admin_dashboard");
+//				if (userType == "driver")
+//					response.sendRedirect("driver/driver_dashboard");
+//				else
+//					response.sendRedirect("customer/customer_dashboard");
+					
+				}else {
+					
+					try {
+						response.sendRedirect("index.jsp");
+					} catch (IOException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+					
 				
-				HttpSession session=request.getSession();
-				session.setAttribute("username",userName);
-				session.setAttribute("userType", userType);
-				if(userType == "admin")
-					response.sendRedirect("admin/admin_dashboard");
-				if (userType == "driver")
-					response.sendRedirect("driver/driver_dashboard");
-				else
-					response.sendRedirect("customer/customer_dashboard");
-				
-			}else {
-				
-				response.sendRedirect("index.jsp");
-				
+
+			try { user = service.searchUser(userName, userPassword); HttpSession session =
+								  request.getSession();
+			 
 			
-		
-	try { user = service.searchUser(userName, userPassword); HttpSession session =
-				  request.getSession();
-		 
-		
-		if(user != null) { 
-			
-			session.setAttribute("sessionusername", userName);
-			session.setAttribute("type", user.getUserType());
-			
-			 session.setMaxInactiveInterval(30*60);
-			  
+			if(user != null) { 
+				
+				session.setAttribute("sessionusername", userName);
+				session.setAttribute("type", user.getUserType());
+				
+				 session.setMaxInactiveInterval(30*60);
+				  
 //			 Cookie userName = new Cookie("sessionusername", username);
 //			 userName.setMaxAge(30*60); response.addCookie(userName);
 //			 
 //			 Cookie type = new Cookie("sessiontype", user.getUserType());
 //			 type.setMaxAge(30*60); response.addCookie(type);
-			
-			try 
-			{
-				response.sendRedirect("index.jsp");
-			} 
-			catch (IOException e) 
-			{
-				message = e.getMessage();
-			}
-			
-			
-			  try { response.sendRedirect("index.jsp?sessionuname="+userName+"");
-			  response.sendRedirect("welcome.jsp?sessionuname="+userName+""); }
-			  catch (IOException ex) {
-			  
-			  message = ex.getMessage(); }
-			 
-		}
-		else 
-		{
-			try 
-			{
-				response.sendRedirect("Login.jsp");
-				message = "No User Found!";	
-			} catch (IOException es) {
 				
-				message = es.getMessage();
-			}	
-		}
-		
-		session.setAttribute("loginMessage", message);
-		
-	}catch(ClassNotFoundException|
+				try 
+				{
+					response.sendRedirect("index.jsp");
+				} 
+				catch (IOException e) 
+				{
+					message = e.getMessage();
+				}
+				
+				
+				  try { response.sendRedirect("index.jsp?sessionuname="+userName+"");
+				  response.sendRedirect("welcome.jsp?sessionuname="+userName+""); }
+				  catch (IOException ex) {
+				  
+				  message = ex.getMessage(); }
+				 
+				}
+				else 
+				{
+				try 
+				{
+					response.sendRedirect("Login.jsp");
+					message = "No User Found!";	
+				} catch (IOException es) {
+					
+					message = es.getMessage();
+				}	
+				}
+				
+				session.setAttribute("loginMessage", message);
+				
+				}catch(ClassNotFoundException|
+				
+				SQLException e)
+				{
+				
+				message = e.getMessage();
+				}
 
-	SQLException e)
-	{
-
-		message = e.getMessage();
-	}
-
-}}
+				}
+			} catch (ClassNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}}}

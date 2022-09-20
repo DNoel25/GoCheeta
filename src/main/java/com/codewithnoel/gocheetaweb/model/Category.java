@@ -10,14 +10,19 @@ public class Category {
 		
 	}
 
+	
 
 	public Category(int categoryId, String categoryName) {
-		super();
+		
 		this.categoryId = categoryId;
 		this.categoryName = categoryName;
 	}
 
 
+	public Category(String categoryName) {
+		this.categoryName = categoryName;
+	}
+	
 	public int getCategoryId() {
 		return categoryId;
 	}
