@@ -2,7 +2,7 @@ package com.codewithnoel.gocheetaweb.service;
 
 import java.sql.SQLException;
 import java.util.List;
-
+ 
 import com.codewithnoel.gocheetaweb.dao.CategoryFactory;
 import com.codewithnoel.gocheetaweb.dao.CategoryManager;
 import com.codewithnoel.gocheetaweb.model.Category;
@@ -33,6 +33,10 @@ public class CategorySvcs {
 				return categoryManager.addCategory(category);
 			}
 			
+			public Category getCategory(int categoryId) throws ClassNotFoundException, SQLException {
+				CategoryManager categoryManager = CategoryFactory.getCategoryManagerInstance();
+				return categoryManager.getCategory(categoryId);
+			}
 			
 			public List<Category> getCategories() throws ClassNotFoundException, SQLException {
 				
@@ -55,11 +59,7 @@ public class CategorySvcs {
 				return categoryManager.deleteCategory(CategoryId);
 			}
 		
-//		public Product getCategory(int categoryId) throws ClassNotFoundException, SQLException {
 //			
-//			CategoryManager categoryManager = CategoryFactory.getCategoryManagerInstance();
-//			return categoryManager.getCategory(categoryId);
-//		}
 		
 		
 	

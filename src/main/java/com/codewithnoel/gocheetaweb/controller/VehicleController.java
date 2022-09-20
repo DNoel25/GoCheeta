@@ -10,7 +10,9 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
- 
+import javax.servlet.http.HttpSession;
+
+import com.codewithnoel.gocheetaweb.model.Category;
 import com.codewithnoel.gocheetaweb.model.Vehicle; 
 import com.codewithnoel.gocheetaweb.service.VehicleSvcs;
 
@@ -28,17 +30,22 @@ public class VehicleController extends HttpServlet {
 
 	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		var vehiclId = request.getParameter("vehiclId");
-    	if(vehiclId == null) {    		
-    		launchAllVehicles(request, response);
+		var vehicleId = request.getParameter("vehicleId");
+		if(vehicleId != null) {    		
+
+			launchSpecificVehicleInformation(request, response);
     	}
+    	else {  
+
+    		launchAllVehicles(request, response);
+    	}		
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		var type= request.getParameter("type");
 		if(type != null) {
 			if(type.equals("update")) {
-				updateCategory(request, response);
+				updateVehicle(request, response);
 			} else if(type.equals("delete")) {
 				deleteVehicle(request, response);
 			} else {
@@ -47,7 +54,28 @@ public class VehicleController extends HttpServlet {
 		}
 	}
 	
-private void launchAllVehicles(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	private void launchSpecificVehicleInformation(HttpServletRequest request, HttpServletResponse response) throws IOException {
+		
+		Vehicle vehicle;
+		clearMessage();
+		
+		try { 
+			vehicle = service.getVehicle(Integer.parseInt(request.getParameter("vehicleId")));
+			
+		} catch (NumberFormatException | ClassNotFoundException | SQLException e) {
+			
+			message = e.getMessage();
+			vehicle = new Vehicle();
+		}
+		
+		HttpSession session = request.getSession();		
+		session.setAttribute("message", message);
+		session.setAttribute("vehicle", vehicle);
+		System.out.println(vehicle.getVehicleCategory());
+		response.sendRedirect("admin_manage_category.jsp");
+	}
+	
+	private void launchAllVehicles(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
     	List<Vehicle> vehicleList;
     	clearMessage();
@@ -65,7 +93,7 @@ private void launchAllVehicles(HttpServletRequest request, HttpServletResponse r
 		rd.forward(request, response);
 	}
 
-	private void updateCategory(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	private void updateVehicle(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		int vehicleId = Integer.parseInt(request.getParameter("vehicleId"));
 		String vehicleLicenseNo = request.getParameter("vehicleLicenseNo"); 

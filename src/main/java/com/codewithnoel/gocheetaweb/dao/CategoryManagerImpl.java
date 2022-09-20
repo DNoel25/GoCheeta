@@ -7,7 +7,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
-
+ 
 import com.codewithnoel.gocheetaweb.model.Category;
  
 
@@ -50,8 +50,30 @@ public class CategoryManagerImpl implements CategoryManager {
 		return result > 0;
 	}
 
-//	public Category getCategory(int CategoryId) throws ClassNotFoundException, SQLException {	
-//	}
+
+	
+	public Category getCategory(int categoryId) throws ClassNotFoundException, SQLException {
+
+		Connection connection = getconnection();
+		
+		String query = "SELECT * FROM tblcategory WHERE categoryId = ?";
+		
+		PreparedStatement ps = connection.prepareStatement(query);
+		ps.setInt(0, categoryId); 
+		
+		ResultSet rs = ps.executeQuery();
+		
+		Category category = new Category();
+		
+		while(rs.next()) {
+			category.setCategoryId(rs.getInt("categoryId"));
+			category.setCategoryName(rs.getString("categoryName")); 
+		}
+		
+		ps.close();
+		connection.close();
+		return category;
+	}
 
 	public List<Category> getCategories() throws ClassNotFoundException, SQLException {
 

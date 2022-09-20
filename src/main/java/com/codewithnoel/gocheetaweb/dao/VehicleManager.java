@@ -7,12 +7,12 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
-   
+
 import com.codewithnoel.gocheetaweb.model.Vehicle;
 
 public class VehicleManager {
 
-	private static Connection getconnection() throws ClassNotFoundException, SQLException {
+private static Connection getconnection() throws ClassNotFoundException, SQLException {
 		
 		DBConnector mysql = new MySqlDBConnector();
 		return mysql.getConnection();
@@ -71,7 +71,7 @@ public class VehicleManager {
 		return records;
 	}
 	
-	public Vehicle getVehicle(int vehicleId) throws ClassNotFoundException, SQLException {
+	public static Vehicle getVehicle(int vehicleId) throws ClassNotFoundException, SQLException {
 
 		Connection connection = getconnection();
 		
@@ -99,7 +99,7 @@ public class VehicleManager {
 		return vehicle;
 	}
 	
-	public boolean updateVehicle(Vehicle vehicle) throws ClassNotFoundException, SQLException {
+	public static boolean updateVehicle(Vehicle vehicle) throws ClassNotFoundException, SQLException {
 
 		Connection connection = getconnection();
 		String query = "UPDATE tblvehicle SET vehiclePlateNo = ?, vehicleLicenseNo = ?, vehicleDesc = ?, vehicleCategory = ?, vehicleBranchId WHERE categoryId = ?";
@@ -119,7 +119,7 @@ public class VehicleManager {
 		return result > 0;
 	}
 	
-	public boolean deleteVehicle(int vehicleId) throws ClassNotFoundException, SQLException {
+	public static boolean deleteVehicle(int vehicleId) throws ClassNotFoundException, SQLException {
 
 		Connection connection = getconnection();
 		String query = "DELETE FROM tblvehicle WHERE vehicleId = ?";

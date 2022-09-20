@@ -10,6 +10,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
  
 import com.codewithnoel.gocheetaweb.model.Category;
 import com.codewithnoel.gocheetaweb.service.CategorySvcs;
@@ -24,13 +25,18 @@ public class CategoryManagerController extends HttpServlet {
 	private String deleteMessage;
     
     public CategoryManagerController() {
-        
+    	service = CategorySvcs.getCategoryServiceInstance();
     }
 
 	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		var categoryId = request.getParameter("categoryId");
-    	if(categoryId == null) {    		
+		if(categoryId != null) {    		
+
+			launchSpecificCategoryInformation(request, response);
+    	}
+    	else {  
+
     		launchAllCategories(request, response);
     	}
 	}
@@ -51,6 +57,25 @@ public class CategoryManagerController extends HttpServlet {
 		
 	}
 
+	private void launchSpecificCategoryInformation(HttpServletRequest request, HttpServletResponse response) throws IOException {
+		
+		Category category;
+		clearMessage();
+		
+		try { 
+			category = service.getCategory(Integer.parseInt(request.getParameter("categoryId")));
+		} catch (NumberFormatException | ClassNotFoundException | SQLException e) {
+			
+			message = e.getMessage();
+			category = new Category();
+		}
+		
+		HttpSession session = request.getSession();		
+		session.setAttribute("message", message);
+		session.setAttribute("category", category);
+		System.out.println(category.getCategoryName());
+		response.sendRedirect("admin_manage_category.jsp");
+	}
 
 		
 	private void launchAllCategories(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -67,7 +92,7 @@ public class CategoryManagerController extends HttpServlet {
 		}
 		request.setAttribute("categoryList", categoryList);
 		request.setAttribute("message", message);
-		RequestDispatcher rd = request.getRequestDispatcher("admin_category.jsp");		
+		RequestDispatcher rd = request.getRequestDispatcher("admin/admin_category.jsp");		
 		rd.forward(request, response);
 	}
 
@@ -94,7 +119,7 @@ public class CategoryManagerController extends HttpServlet {
 		
 		request.setAttribute("category", category);
 		request.setAttribute("message", message);
-		RequestDispatcher rd = request.getRequestDispatcher("admin_manage_category.jsp");
+		RequestDispatcher rd = request.getRequestDispatcher("admin/admin_manage_category.jsp");
 		rd.forward(request, response);
 	}
 	
@@ -135,7 +160,7 @@ public class CategoryManagerController extends HttpServlet {
 			message = e.getMessage();
 		}
 		request.setAttribute("message", message);
-		RequestDispatcher rd = request.getRequestDispatcher("admin_add_category.jsp");
+		RequestDispatcher rd = request.getRequestDispatcher("admin/admin_add_category.jsp");
 		rd.forward(request, response);
 	}
 	

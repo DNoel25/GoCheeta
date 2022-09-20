@@ -38,15 +38,15 @@ public class UsersSvcs {
 	
 	//----------services
 		public List<Users> getUsers() throws ClassNotFoundException, SQLException {
-			UserManager uManager = new UserManager(); 
+			 
 			
-			return uManager.getUsers();
+			return UserManager.getUsers();
 		}
 		
 		public List<Users> getDrivers() throws ClassNotFoundException, SQLException {
-			UserManager uManager = new UserManager(); 
 			
-			return uManager.getDrivers();
+			
+			return UserManager.getDrivers();
 		}
 		
 		public boolean addUser(Users users) throws ClassNotFoundException, SQLException {		
